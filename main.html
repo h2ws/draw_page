@@ -1,0 +1,87 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<title>抽奖</title>
+<link rel="stylesheet" href="css/layout.css" />
+	<script type="text/javascript">
+		function rand_area_init(iScale) {
+			if (!(iScale > 3 && iScale < 900))return;
+
+			var oDiv_rand = document.getElementsByClassName("random-area")[0];
+			alert("oDivtype:"+typeof(oDiv_rand));
+			reset_child(oDiv_rand);
+			
+			var iRang = Math.sqrt(iScale);
+			/* iRang = parseInt(iRang)+1; */
+			/* iRang = Math.round(iRang); */
+			iRang = Math.ceil(iRang);
+			var iSize = (640/iRang/18);
+			alert(iSize);
+			for (var i=0; i<iScale; i++) {
+				var oGrid = document.createElement("div");
+				oGrid.style.width =  iSize*16+"px";
+				oGrid.style.height =  iSize*16+"px";
+				oGrid.style.margin =  iSize*1+"px";
+				oGrid.style.fontSize = iSize*8+"px";
+				oGrid.style.lineHeight = iSize*16+"px";
+
+				oGrid.className = "rand-grid";
+				oGrid.innerHTML = i+1;
+				oDiv_rand.appendChild(oGrid);
+			}
+			alert("rt:"+oDiv_rand.children.length);
+		}
+
+		//清空obj下的所有子节点
+		function reset_child(obj) {
+			var iLen = obj.children.length;
+			alert("len:"+iLen);
+			for (var i=0; i<iLen; i++) {
+				obj.removeChild(obj.children[0]);
+			}
+		}
+
+		window.onload = function() {
+			var oBtn_begin = document.getElementById("btn-begin");
+			var oBtn_scale = document.getElementById("btn-scale");
+			var oTxt_scale = document.getElementById("txt-scale");
+
+			oBtn_scale.onclick = function() {
+				var tmp = oTxt_scale.value;
+				if (isNaN(tmp) || tmp == "")return;
+
+				rand_area_init(parseInt(tmp));
+			}
+			rand_area_init(70);
+		}
+	</script>
+</head>
+<body>
+<div class="warp">
+
+	<div class="random-area">
+	</div>
+
+	<div class="main-area">
+		<input type="button" id="btn-begin" value="开始抽奖"/>
+		<input type="button" id="btn-set" value="设置" />
+	</div>
+
+	<div class="set-area">
+		<select>
+			<option>无特效（延迟3秒）</option>
+			<option>十字定位特效</option>
+			<option>贪吃蛇特效</option>
+			<option>筛选特效</option>
+			<option>交换特效(emmmmmm.....)</option>
+		</select>
+		<div class="scale">
+			选择规模(4-99)
+			<input type="text" id="txt-scale" value="36" />
+			<input type="button" id="btn-scale" value="确认" />
+		</div>
+	</div>
+
+</div>
+</body>
+</html>
